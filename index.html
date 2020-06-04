@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Scroll Progress Indicator | Codegrid</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.4/TweenMax.min.js"></script>
+    </head>
+    <body>
+        <div class="percent">
+            <div class="fill"></div>
+            <div class="counter"><h1></h1></div>
+        </div>
+        <div class="container">
+            <div class="content">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus possimus enim
+                    dolorem quod asperiores quam. Itaque obcaecati blanditiis ut. Nobis vel illo
+                    amet fugiat rerum distinctio placeat ratione et! Adipisci voluptates est nulla,
+                    nostrum nesciunt nisi placeat recusandae! Consequatur, rem.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, minima accusamus
+                    odit voluptas cumque et maxime. Non nam minima tempora nemo assumenda fugit
+                    illum repellendus facilis. Placeat possimus tempora sapiente, pariatur nisi rem
+                    voluptatibus quaerat nulla, dolorem sunt maiores, itaque illum nam neque!
+                    Inventore optio repellat fugit vel odit ea.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit inventore quam
+                    est, illo rem voluptatem neque incidunt quos eos? Quis ex minima quam autem et
+                    odit at dolores officia modi.
+                </p>
+            </div>
+        </div>
+        <script>
+            //Remove lines 41-55 for DEMO-2
+            var counter = document.querySelector(".percent");
+
+            TweenLite.set(counter, {
+                xPercent: -5,
+                yPercent: -5,
+            });
+
+            window.addEventListener("mousemove", moveCounter);
+
+            function moveCounter(e) {
+                TweenLite.to(counter, 0.5, {
+                    x: e.clientX,
+                    y: e.clientY,
+                });
+            }
+
+            function progress() {
+                var windowScrollTop = $(window).scrollTop();
+                var docHeight = $(document).height();
+                var windowHeight = $(window).height();
+                var progress = (windowScrollTop / (docHeight - windowHeight)) * 100;
+
+                var $bgColor = progress > 99 ? "#fff" : "#fff";
+                var $textColor = progress > 99 ? "#fff" : "#333";
+
+                $("h1")
+                    .text(Math.round(progress) + "%")
+                    .css({ color: $textColor });
+
+                $(".fill")
+                    .height(progress + "%")
+                    .css({ backgroundColor: $bgColor });
+            }
+            progress();
+            $(document).on("scroll", progress);
+        </script>
+    </body>
+</html>
